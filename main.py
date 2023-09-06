@@ -19,34 +19,24 @@ button = pygame.Rect(50, 40, 160, 50)
 box1 = pygame.Rect(255, 40, 90, 50)
 box2 = pygame.Rect(360, 40, 90, 50)
 
-click = 0 #current score
+#current score
 best = player1.get_best() #best score
 new = 0 #temp
 
 def run_game():
-    global click, best, new
+    global best, new
     run = True
     board = Board()
-    score = font.render("%d" %(click), True, 'white')
+    score = font.render("%d" %player1.score, True, 'white')
     bestS = font.render("%d" %(best), True, 'white')
 
     while run:
 
         pygame.time.delay(100)
         
-        score = font.render("%d" %(click), True, 'white')
+        score = font.render("%d" %(player1.score), True, 'white')
         bestS = font.render("%d" %(best), True, 'white')
         board.draw_cubes(WIN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-            if event.type == pygame.MOUSEBUTTONDOWN and button.collidepoint(event.pos):
-                pygame.time.delay(10)
-                click += 1
-                new = max(best, click)
-                best = new
                 
         pygame.draw.rect(WIN, '#5c381c', button)
 
@@ -67,7 +57,17 @@ def run_game():
         WIN.blit(score, (box1.x+35, box1.y+7))
         WIN.blit(bestS, (box2.x+35, box2.y+7))
         pygame.display.update()
-    player1.write(best)    
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN and button.collidepoint(event.pos):
+                pygame.time.delay(10)
+                player1.score += 1
+                new = max(best, player1.score)
+                best = new
+    player1.write(best)
+    
     pygame.quit()
 
 if __name__ == "__main__":

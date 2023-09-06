@@ -3,9 +3,9 @@ from .consts import x, y, C1, C2, C3, C4, rows, cols, thickness
 
 class Board:
     def __init__(self) -> None:
-        self.board = []
-        self.full = False
-        self.cubes = 2
+        self.__board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+        self.__full = False
+        self.__cubes = 2
 
     def draw_cubes(self, win):
         win.fill(C1)
