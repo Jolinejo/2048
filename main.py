@@ -67,7 +67,6 @@ def run_game():
         WIN.blit(score, (box1.x+35, box1.y+7))
         WIN.blit(bestS, (box2.x+35, box2.y+7))
         pygame.display.update()
-    print(type(best))
     player1.write(best)    
     pygame.quit()
 

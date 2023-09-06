@@ -1,25 +1,16 @@
 class Player:
 
     #writing
+    @staticmethod
     def write(score):
-        file = open('score.txt', 'a') #a => append, w => write, r => read
-        file.writelines(score+'\n')
-        file.close()
+        with open('score.txt', mode="w+", encoding="utf-8") as myfile:
+            myfile.write(str(score))
+    
 
     #reading
     def read(self):
-        file = open('score.txt', 'r')
-        count = 0 
-        for i in file:
-            count += 1
-        
-        count -= 3
-        new = 0
-        while count:
-            new = max(file.readline(int(i)), file.readline(eval(i)+1))
-            count -= 1
-        print(int(new))
-        return new
+        with open('score.txt', encoding="utf-8") as myfile:
+            return(int(myfile.read()))
 
             
     
