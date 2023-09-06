@@ -9,16 +9,16 @@ class Board:
 
     def draw_cubes(self, win):
         win.fill(C1)
-        points = [(50, 50), (450, 50), (450, 450), (50, 450)]
+        points = [(50, 100), (450, 100), (450, 500), (50, 500)]
 
         for row in range(rows):
             for col in range(cols):
 
-                pygame.draw.rect(win, C3, ((row*x+50), (col*x+50), x, y))
+                pygame.draw.rect(win, C3, ((row*x+50), (col*x+100), x, y))
         pygame.draw.lines(win, C4, True, points, thickness)
         for i in range((x+50), (3*x)+51, x):
-            pygame.draw.line(win, C4, (i,50), (i, 450), thickness)
-        for i in range((x+50), (3*x)+51, x):
-            pygame.draw.line(win, C4, (50,i), (450, i), thickness)
+            pygame.draw.line(win, C4, (i,100), (i, 500), thickness)
+        for i in range((x+100), (3*x)+101, x):
+            pygame.draw.line(win, C4, (50,i), (450,i),thickness)
 
                 

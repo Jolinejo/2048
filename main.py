@@ -1,32 +1,72 @@
 import pygame
-from mods.consts import WIDTH, HEIGHT
+from mods.consts import WIDTH, HEIGHT, C1, C2, C3, C4
 from mods.board import Board
 
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.init()
+
+WIN = pygame.display.set_mode((WIDTH, 550))
 pygame.display.set_caption("Empire's 2048")
 
 
+font = pygame.font.SysFont("Monospace", 32, bold=True) #font style
+newGame = pygame.Rect((10, 10, 50, 50))
+text = font.render("New Game", True, 'white')
+
+button = pygame.Rect(50, 40, 160, 50)
+box1 = pygame.Rect(255, 40, 90, 50)
+box2 = pygame.Rect(360, 40, 90, 50)
+
 def run_game():
+    click = 0 #current score
+    best = 0 #best score
+    new = 0 #temp
+    
     run = True
     board = Board()
-
+    
     while run:
+
         pygame.time.delay(100)
+        
+        score = font.render("%d" %(click), True, 'white')
+        bestS = font.render("%d" %(new), True, 'white')
+        board.draw_cubes(WIN)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN and button.collidepoint(event.pos):
+                pygame.time.delay(10)
+                click += 1
+                new = max(best, click)
+                best = new
+                
+        pygame.draw.rect(WIN, '#5c381c', button)
+
+        # a, b = pygame.mouse.get_pos()
+        # if  button.x <= a <= button.x+160 and button.y <= b <= button.y + 50:
+        #     pygame.draw.rect(WIN, (80, 80, 80), button)
+        # else:
+        #     pygame.draw.rect(WIN, (180, 180, 180), button)
+
+        WIN.blit(text, (button.x+5, button.y+5))
+
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:
             pass
-        if keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT]:
             pass
-        if keys[pygame.K_UP]:
+        elif keys[pygame.K_UP]:
             pass
-        if keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN]:
             pass
-        board.draw_cubes(WIN)
-        pygame.display.update()
+        pygame.draw.rect(WIN, '#1c5c2f', box1)
+        pygame.draw.rect(WIN, '#1c5c2f', box2)
+        WIN.blit(score, (box1.x+35, box1.y+7))
+        WIN.blit(bestS, (box2.x+35, box2.y+7))
+        pygame.display.update()   
     pygame.quit()
 
 
