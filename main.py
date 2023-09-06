@@ -1,10 +1,13 @@
 import pygame
 from mods.consts import WIDTH, HEIGHT, C1, C2, C3, C4
 from mods.board import Board
+from player import Player
 
 pygame.init()
 
-WIN = pygame.display.set_mode((WIDTH, 550))
+player1 = Player()
+
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Empire's 2048")
 
 
@@ -16,20 +19,23 @@ button = pygame.Rect(50, 40, 160, 50)
 box1 = pygame.Rect(255, 40, 90, 50)
 box2 = pygame.Rect(360, 40, 90, 50)
 
+click = 0 #current score
+best = player1.get_best() #best score
+new = 0 #temp
+
 def run_game():
-    click = 0 #current score
-    best = 0 #best score
-    new = 0 #temp
-    
+    global click, best, new
     run = True
     board = Board()
-    
+    score = font.render("%d" %(click), True, 'white')
+    bestS = font.render("%d" %(best), True, 'white')
+
     while run:
 
         pygame.time.delay(100)
         
         score = font.render("%d" %(click), True, 'white')
-        bestS = font.render("%d" %(new), True, 'white')
+        bestS = font.render("%d" %(best), True, 'white')
         board.draw_cubes(WIN)
 
         for event in pygame.event.get():
@@ -43,12 +49,6 @@ def run_game():
                 best = new
                 
         pygame.draw.rect(WIN, '#5c381c', button)
-
-        # a, b = pygame.mouse.get_pos()
-        # if  button.x <= a <= button.x+160 and button.y <= b <= button.y + 50:
-        #     pygame.draw.rect(WIN, (80, 80, 80), button)
-        # else:
-        #     pygame.draw.rect(WIN, (180, 180, 180), button)
 
         WIN.blit(text, (button.x+5, button.y+5))
 
@@ -66,9 +66,11 @@ def run_game():
         pygame.draw.rect(WIN, '#1c5c2f', box2)
         WIN.blit(score, (box1.x+35, box1.y+7))
         WIN.blit(bestS, (box2.x+35, box2.y+7))
-        pygame.display.update()   
+        pygame.display.update()
+    print(type(best))
+    player1.write(best)    
     pygame.quit()
-
 
 if __name__ == "__main__":
     run_game()
+
